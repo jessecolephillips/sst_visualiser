@@ -7,6 +7,10 @@
 # ggplot2.
 # NB: Will constrain this script to being with, system requirements can get heavy.
 
+# This script will likely remain a way to download and plot sst data in a
+# LIGHTWEIGHT manner. Heavier needs should be addressed with the podaac data
+# subscriber/downloader python programs.
+
 # PACKAGES ---------------------------------------------------------------
 # Ensure required packages are installed:
 required_pkgs <- c("dplyr", "ggplot2", "rerddap", "ggspatial")
