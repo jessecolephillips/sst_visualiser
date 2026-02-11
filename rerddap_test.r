@@ -5,10 +5,10 @@ library(ggspatial)
 
 
 # search for data sets
-data <- rerddap::ed_search(
-  "noaacrwsstDaily",
+rerddap::ed_search(
+  "MUR",
   url = "https://coastwatch.noaa.gov/erddap/"
-)
+)$info
 
 # The information for the targetted NOAA data
 rerddap::info(
