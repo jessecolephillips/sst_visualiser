@@ -13,7 +13,7 @@
 
 # PACKAGES ---------------------------------------------------------------
 # Ensure required packages are installed:
-required_pkgs <- c("dplyr", "ggplot2", "rerddap", "ggspatial")
+required_pkgs <- c("dplyr", "ggplot2", "rerddap")
 
 # If missing, install them:
 missing_pkgs <- required_pkgs[
@@ -45,13 +45,16 @@ gc()
 # Set data set ID of chosen product
 dataset_id <- "noaacrwsstDaily"
 
+# Dataset title: Sea Surface Temperature, NOAA Coral Reef Watch Daily Global 5km Satellite SST
+# (CoralTemp), 1985-present, Daily
+
 # Use this function to check connection to ERDDAP servers and info in chosen dataset:
-# info(datasetid = dataset_id, url = "https://coastwatch.noaa.gov/erddap/")
+#info(datasetid = dataset_id, url = "https://coastwatch.noaa.gov/erddap/")
 
 # Set temporal and spatial bounds
-dates = c('2020-01-01', '2020-01-01') # This bound CAN be just one day if needed (but two values are still required)
-lats = c(-38, -24)
-longs = c(14, 35)
+dates = c('2026-01-01', '2026-01-01') # This bound CAN be just one day if needed (but two values are still required)
+lats = c(-42, -22)
+longs = c(12, 38)
 
 
 # DOWNLOAD NC FILE TO STORAGE --------------------------------------------
@@ -112,36 +115,24 @@ sst_map <- ggplot(sst_data, aes(x = lon, y = lat)) +
   geom_raster(aes(fill = sst)) +
   annotation_borders(col = "black", fill = "cornsilk", linewidth = 0.6) +
   coord_equal(xlim = longs, ylim = lats, expand = 0) +
-  # geom_point(
-  #   data = coastal_towns,
-  #   aes(x = lon, y = lat),
-  #   shape = 21,
-  #   size = 3,
-  #   fill = "#db0e0eff"
-  # ) +
-  # geom_label(
-  #   data = coastal_towns,
-  #   aes(x = lon, y = lat, label = names),
-  #   nudge_y = 0.5
-  # ) +
-  # scale_x_continuous(
-  #   breaks = seq(15, 35, 5),
-  #   labels = c("15°E", "20°E", "25°E", "30°E", "35°E"),
-  #   position = "bottom"
-  # ) +
-  # scale_y_continuous(
-  #   breaks = seq(-36, -24, 4),
-  #   labels = c("36.0°S", "32.0°S", "28.0°S", "24.0°S"),
-  #   position = "right"
-  # ) +
-  scale_fill_gradient(low = "#03064eff", high = "#35beebff") +
+  scale_x_continuous(
+    breaks = seq(15, 35, 5),
+    labels = c("15°E", "20°E", "25°E", "30°E", "35°E"),
+    position = "bottom"
+  ) +
+  scale_y_continuous(
+    breaks = seq(-40, -25, 5),
+    labels = c("40°S", "35°S", "30°S", "25°S"),
+    position = "right"
+  ) +
+  scale_fill_gradient(low = "#03064eff", high = "#3ddaf2ff") +
   labs(
     title = "SST around southern Africa",
-    #subtitle = sst_data$t,
+    subtitle = sst_data$t,
     x = "",
     y = "",
     fill = "SST (°C)",
-    #caption = "Sea Surface Temperature, NOAA Coral Reef Watch Daily Global 5km Satellite SST (CoralTemp), 1985-present, Daily"
+    caption = "Sea Surface Temperature, NOAA Coral Reef Watch Daily Global 5km Satellite SST (CoralTemp), 1985-present, Daily"
   ) +
   theme(
     legend.position = c(0.5, 0.9),
@@ -151,3 +142,12 @@ sst_map <- ggplot(sst_data, aes(x = lon, y = lat)) +
 
 # FOR TESTING: show plot in viewer pane
 sst_map
+
+
+# Save Plot
+ggsave(
+  "plots/sst_around_sa_5km_daily.png",
+  plot = sst_map,
+  height = 6,
+  width = 9
+)

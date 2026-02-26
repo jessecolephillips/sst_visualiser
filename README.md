@@ -5,6 +5,6 @@ This repository houses the framework for an R-based Shiny web app that downloads
 This will be published to either Posit Connect Cloud or Github Pages, with the goal that the user may select a spatial and temporal extent, and SST will be plotted. 
 
 The "end-goal" output would be something like:
-![Project banner](plots/test_map.png)
+![Project banner](plots/sst_around_sa_5km_daily.png)
 
 That started with a choice of SST data product, time frame and co-ordinate bounds.
