@@ -53,10 +53,13 @@ dataset_id <- "noaacrwsstDaily"
 
 # The dataset seems to be 2 days behind current day (this is important for the daily plotting idea)
 
+# Get system date and move two days back:
+date = Sys.Date() - 2
+
 # Set temporal and spatial bounds
-dates = c('2026-01-01', '2026-01-01') # This bound CAN be just one day if needed (but two values are still required)
-lats = c(-42, -22)
-longs = c(12, 38)
+dates = c(date, date) # This bound CAN be just one day if needed (but two values are still required)
+lats = c(-44, -22)
+longs = c(11, 39)
 
 
 # DOWNLOAD NC FILE TO STORAGE --------------------------------------------
@@ -86,7 +89,7 @@ longs = c(12, 38)
 
 sst_data <- griddap(
   datasetx = dataset_id,
-  time = dates,
+  time = as.character(dates),
   latitude = lats,
   longitude = longs,
   fields = "analysed_sst", # Specifiacallty only pulls SST
@@ -130,7 +133,7 @@ sst_map <- ggplot(sst_data, aes(x = lon, y = lat)) +
   scale_fill_gradient(low = "#03064eff", high = "#3ddaf2ff") +
   labs(
     title = "SST around southern Africa",
-    subtitle = sst_data$t,
+    subtitle = date,
     x = "",
     y = "",
     fill = "SST (°C)",
@@ -147,9 +150,20 @@ sst_map
 
 
 # SAVE PLOT --------------------------------------------------------------
+
+# Format date for naming file
+timestamp <- format(date, "%Y%m%d")
+fname <- paste0("sst_around_sa_", timestamp, ".png")
+
+
 ggsave(
-  "plots/sst_around_sa_5km_daily.png",
+  filename = paste0("plots/", fname),
   plot = sst_map,
-  height = 6,
-  width = 9
+  height = 7,
+  width = 8
 )
+
+
+# FINAL CLEANUP ----------------------------------------------------------
+rm(list = ls(all.names = TRUE))
+gc()
