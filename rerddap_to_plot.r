@@ -49,7 +49,9 @@ dataset_id <- "noaacrwsstDaily"
 # (CoralTemp), 1985-present, Daily
 
 # Use this function to check connection to ERDDAP servers and info in chosen dataset:
-#info(datasetid = dataset_id, url = "https://coastwatch.noaa.gov/erddap/")
+# info(datasetid = dataset_id, url = "https://coastwatch.noaa.gov/erddap/")
+
+# The dataset seems to be 2 days behind current day (this is important for the daily plotting idea)
 
 # Set temporal and spatial bounds
 dates = c('2026-01-01', '2026-01-01') # This bound CAN be just one day if needed (but two values are still required)
@@ -144,7 +146,7 @@ sst_map <- ggplot(sst_data, aes(x = lon, y = lat)) +
 sst_map
 
 
-# Save Plot
+# SAVE PLOT --------------------------------------------------------------
 ggsave(
   "plots/sst_around_sa_5km_daily.png",
   plot = sst_map,
