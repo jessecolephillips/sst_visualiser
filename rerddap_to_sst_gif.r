@@ -33,10 +33,13 @@ gc()
 
 # SET UP VARS ------------------------------------------------------------
 
-dates <- seq(as.Date("2025-04-14"), as.Date("2025-06-30"), by = "day")
+dates <- seq(as.Date("2025-01-01"), as.Date("2025-12-31"), by = "day")
 
 lats = c(-42, -22)
 longs = c(12, 38)
+
+# Global SST range (so that colour scale stays the same for every png)
+sst_range <- c(7, 32)
 
 # MAIN LOOP --------------------------------------------------------------
 
@@ -79,7 +82,7 @@ for (i in seq_along(dates)) {
       position = "right"
     ) +
     # scale_fill_gradient(low = "#03064eff", high = "#3ddaf2ff") +
-    scale_fill_viridis_c(option = "inferno") +
+    scale_fill_viridis_c(option = "inferno", limits = sst_range) +
     labs(
       title = "SST around southern Africa",
       subtitle = dates[i],
