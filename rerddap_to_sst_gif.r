@@ -33,7 +33,7 @@ gc()
 
 # SET UP VARS ------------------------------------------------------------
 
-dates <- seq(as.Date("1990-01-01"), as.Date("1990-01-07"), by = "day")
+dates <- seq(as.Date("2025-04-14"), as.Date("2025-06-30"), by = "day")
 
 lats = c(-42, -22)
 longs = c(12, 38)
@@ -100,7 +100,7 @@ for (i in seq_along(dates)) {
   fname <- paste0("sst_around_sa_", timestamp, ".png")
 
   ggsave(
-    filename = paste0("gif_plots/", fname),
+    filename = paste0("~/sst_gif_plots/", fname),
     plot = sst_map,
     height = 7,
     width = 8
@@ -111,4 +111,6 @@ for (i in seq_along(dates)) {
   gc()
 
   print("Done")
+
+  Sys.sleep(2)
 }
